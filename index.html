@@ -85,16 +85,6 @@
 
         .recommended-event-card {
             margin: 10px 0;
-            max-width: 300px; /* Set a max width for the card */
-            margin: 0 auto; /* Center the card */
-        }
-
-        .recommended-event-image {
-            width: 80px; /* Set the width of the image */
-            height: 80px; /* Set the height of the image */
-            border-radius: 50%; /* Make the image circular */
-            object-fit: cover; /* Ensure the image covers the area */
-            margin-bottom: 10px; /* Add space below the image */
         }
 
         .suggestions-list {
@@ -337,8 +327,7 @@
                 const card = document.createElement('div');
                 card.className = 'card recommended-event-card';
                 card.innerHTML = `
-                    <div class="card-body text-center">
-                        <img src="C:\\Users\\inspi\\OneDrive\\Desktop\\placeholder.jpg" class="recommended-event-image" alt="${event.title} Image">
+                    <div class="card-body">
                         <h5 class="card-title">${event.title}</h5>
                         <a href="${event.link}" class="btn btn-primary">More Info</a>
                     </div>

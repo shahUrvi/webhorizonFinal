@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #acc8f2; /* Light background color */
+            font-family: 'Arial', sans-serif;
+        }
+
+        .border-container {
+            background-color: #ffffff; /* White background for the card */
+            border-radius: 15px; /* Rounded corners */
+            padding: 40px; /* Padding around the content */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            width: 400px; /* Fixed width for the card */
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 30px; /* Spacing below the heading */
+            color: #5b5c97; /* Soft blue for heading */
+            font-size: 2rem;
+        }
+
+        .form-control {
+            height: 50px; /* Increased height for input fields */
+            border-radius: 25px; /* Rounded input fields */
+            border: 1px solid #ccc; /* Light border */
+            background-color: #f8f9fa; /* Light grey background for inputs */
+            transition: border 0.3s ease, box-shadow 0.3s ease; /* Smooth focus effects */
+        }
+
+        .form-control:focus {
+            border-color: #5b5c97; /* Focused border color */
+            box-shadow: 0 0 5px rgba(91, 92, 151, 0.5); /* Soft glow on focus */
+        }
+
+        .btn {
+            background-color: #5b5c97; /* Soft blue button */
+            color: white;
+            border-radius: 50px; /* Rounded button */
+            padding: 15px; /* Padding for buttons */
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: background 0.3s ease;
+            width: 100%; /* Full width button */
+            border: none; /* No border */
+        }
+
+        .btn:hover {
+            background-color: #4a4b85; /* Darker shade on hover */
+        }
+
+        .modal-content {
+            border-radius: 10px; /* Rounded corners for modal */
+            border: none; /* No border */
+        }
+
+        .modal-header {
+            background-color: #5b5c97; /* Soft blue header */
+            color: white;
+            border-top-left-radius: 10px; /* Rounded corners */
+            border-top-right-radius: 10px;
+        }
+
+        .modal-body {
+            color: #333; /* Dark text color */
+        }
+
+        .modal-footer .btn-secondary {
+            background-color: #333; /* Dark footer button */
+            border-radius: 50px; /* Rounded button */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sign Up Section -->
+<section id="signup" class="border-container">
+    <h2>Sign Up</h2>
+    <form id="signupForm">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Full Name" required>
+        </div>
+        <div class="form-group">
+            <input type="email" class="form-control" placeholder="Email" required>
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" placeholder="Password" required>
+        </div>
+        <button type="submit" class="btn">Sign Up</button>
+    </form>
+</section>
+
+<!-- Popup Modal -->
+<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signupModalLabel">Sign Up Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                You have successfully signed up!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#signupForm').on('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            $('#signupModal').modal('show'); // Show the modal
+            $(this).trigger('reset'); // Reset the form fields
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Finder with Search</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f0f8ff; /* Light background */
+            font-family: Arial, sans-serif;
+        }
+        header {
+            background: linear-gradient(to right, #5feffff4, #5c8cac); /* Warm gradient */
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        #map {
+            height: 100px; /* Adjusted height for a smaller map */
+            width: 300px; 
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid #ff8c00; /* Orange border */
+        }
+        .event-info, .search-bar {
+            margin-top: 20px;
+            background-color: #ffffff; /* White background */
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid #008080; /* Teal border */
+            transition: transform 0.3s;
+        }
+        .event-info:hover, .search-bar:hover {
+            transform: scale(1.02);
+        }
+        .share-event {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #ffffff; /* White background */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .event-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+        .event-image:hover {
+            transform: scale(1.05);
+        }
+        .social-media img {
+            width: 30px;
+            margin-right: 10px;
+            transition: transform 0.3s;
+        }
+        .social-media img:hover {
+            transform: scale(1.2);
+        }
+        .terms {
+            cursor: pointer;
+            margin-top: 10px;
+            color: #007bff; /* Bootstrap primary color */
+        }
+        .terms-content {
+            display: none;
+            padding-top: 10px;
+            border-top: 1px solid #e1e1e1;
+            margin-top: 10px;
+        }
+        .event-type {
+            display: flex;
+            align-items: center;
+            color: #dc3545; /* Red color for emphasis */
+            font-weight: bold;
+        }
+        .btn-success {
+            background-color: #28a745; /* Green button */
+            border-color: #28a745; /* Green border */
+        }
+        .btn-primary {
+            background-color: #007bff; /* Blue button */
+            border-color: #007bff; /* Blue border */
+        }
+        .btn-secondary {
+            background-color: #6c757d; /* Gray button */
+            border-color: #6c757d; /* Gray border */
+        }
+        /* Smaller input styles */
+        .small-input {
+            width: 200px; /* Set a smaller width for input boxes */
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Event Details</h1>
+    <p>Discover local happenings tailored for you!</p>
+</header>
+
+<div class="container my-4">
+    <!-- Event Information -->
+    <div class="event-info">
+        <h5>Event Title: Food Festival</h5>
+        <img src="food2.jpeg" alt="Event Image" class="event-image">
+        <p><strong>Venue:</strong>Sital park</p>
+        <p><strong>Date:</strong> 2024-12-30</p>
+        <p><strong>Description:</strong> This Food Festival is an immersive culinary experience that brings together the finest chefs, food artisans, and local vendors to celebrate flavors from around the world.</p>
+        <p><strong>Why You Should Attend:</strong> Explore Global Cuisines: Taste and discover diverse dishes from different cultures, all in one place</p>
+        <button class="btn btn-success" onclick="location.href='ticket.html'">Book Now</button>
+    </div>
+
+    <!-- Share the Event and Event Type Section -->
+    <div class="share-event">
+        <div class="event-type">
+            <h5>Event Type:</h5>
+            <span style="margin-left: 10px;">Free</span>
+        </div>
+        <div class="social-media">
+            <h5>Share the Event</h5>
+            <a href="https://www.facebook.com/"><img src="https://img.icons8.com/color/48/000000/facebook.png" alt="Facebook"></a>
+            <a href="https://twitter.com/"><img src="https://img.icons8.com/color/48/000000/twitter.png" alt="Twitter"></a>
+            <a href="https://www.instagram.com/"><img src="https://img.icons8.com/color/48/000000/instagram-new.png" alt="Instagram"></a>
+            <a href="https://www.linkedin.com/"><img src="https://img.icons8.com/color/48/000000/linkedin.png" alt="LinkedIn"></a>
+        </div>
+    </div>
+
+    <!-- Terms and Conditions Section -->
+    <div class="event-info">
+        <h5 class="terms" onclick="toggleTerms()">Terms and Conditions <span>&#x25BC;</span></h5>
+        <div class="terms-content" id="termsContent">
+            <p>Please read the terms and conditions carefully before booking your ticket.</p>
+        </div>
+    </div>
+
+    <!-- Search Bar for 'From' and 'To' Locations -->
+    <div class="search-bar">
+        <div class="form-row">
+            <div class="col">
+                <input type="text" id="from-location" class="form-control small-input" placeholder="From location (e.g. Delhi)">
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-secondary" onclick="setCurrentLocation()">Use Current Location</button>
+            </div>
+        </div>
+        <input type="text" id="to-location" class="form-control small-input mt-2" placeholder="To location (e.g. Mumbai)">
+        <button class="btn btn-primary btn-block mt-2" onclick="findRoute()">Find Route</button>
+    </div>
+
+    <!-- Google Maps Iframe -->
+    <div id="map" class="my-4">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d56119.731882660155!2d70.71625082324354!3d22.3511909401458!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3959c8fbc5ecdb7f%3A0x64c20ffc160f5d53!2sKhandheri%2C%20Gujarat%20360006!5e1!3m2!1sen!2sin!4v1727446359515!5m2!1sen!2sin" width="600" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+</div>
+
+<!-- Modal for Invalid Location -->
+<div class="modal fade" id="invalidLocationModal" tabindex="-1" role="dialog" aria-labelledby="invalidLocationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="invalidLocationModalLabel">Invalid Location</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-message">
+                The location you entered is not valid. Please enter a valid place name.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+    // Toggle terms and conditions visibility
+    function toggleTerms() {
+        const termsContent = document.getElementById('termsContent');
+        termsContent.style.display = termsContent.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Find route function (to be implemented)
+    function findRoute() {
+        const from = document.getElementById('from-location').value;
+        const to = document.getElementById('to-location').value;
+
+        if (!from || !to) {
+            const modalMessage = document.getElementById('modal-message');
+            modalMessage.innerText = 'Please enter both From and To locations.';
+            $('#invalidLocationModal').modal('show');
+        } else {
+            // Implement the route finding logic
+            alert(`Finding route from ${from} to ${to}`);
+        }
+    }
+</script>
+</body>
+</html>

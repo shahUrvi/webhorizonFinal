@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Event Nest</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box; /* Include padding and border in element's total width and height */
+        }
+
+        body {
+            background-color: #f0f8ff; /* Light blue background */
+            font-family: 'Arial', sans-serif;
+        }
+
+        .payment-container {
+            border: 2px solid #007bff; /* Light blue border color */
+            border-radius: 15px; /* Rounded corners */
+            padding: 30px; /* Increased padding */
+            background-color: #ffffff; /* White background for contrast */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow for depth */
+            transition: transform 0.3s; /* Animation on hover */
+            max-width: 600px; /* Maximum width */
+            margin: auto; /* Center align */
+        }
+
+        .payment-container:hover {
+            transform: scale(1.02); /* Scale effect on hover */
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #007bff; /* Blue color for heading */
+            text-align: center; /* Center align heading */
+            font-weight: bold; /* Bold heading */
+            font-size: 1.5rem; /* Larger font size */
+        }
+
+        .btn-primary {
+            background-color: #007bff; /* Blue button */
+            border: none; /* No border */
+            transition: background-color 0.3s; /* Animation on hover */
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        .form-group label {
+            font-weight: bold; /* Bold labels */
+        }
+
+        .rsvp-section {
+            margin-top: 20px;
+            padding: 15px; /* Add some padding */
+            background-color: #e7f3ff; /* Light background for RSVP section */
+            border-radius: 5px; /* Rounded corners */
+        }
+
+        .footer {
+            text-align: center; /* Center align footer text */
+            padding: 20px; /* Padding for footer */
+            color: #666; /* Dark gray color */
+        }
+    </style>
+</head>
+<body>
+    <div id="header"></div>
+
+    <section class="container my-5 payment-container">
+        <h2>Payment Details</h2>
+        <p>Event ID: <span id="eventIdDisplay"></span></p>
+        <p>Number of Tickets: <span id="ticketCountDisplay"></span></p>
+        <p>Attendee Names: <span id="attendeeNamesDisplay"></span></p>
+
+        <form id="payment-form">
+            <div class="form-group">
+                <label for="name">Your Name:</label>
+                <input type="text" class="form-control" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Your Email:</label>
+                <input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="paymentMode">Payment Mode:</label>
+                <select class="form-control" id="paymentMode" required>
+                    <option value="creditCard">Credit/Debit Card</option>
+                    <option value="paypal">PayPal</option>
+                </select>
+            </div>
+
+            <!-- RSVP Section -->
+            <div class="rsvp-section">
+                <p>Please confirm your attendance:</p>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="rsvpConfirmation" required>
+                    <label class="form-check-label" for="rsvpConfirmation">
+                        I confirm my attendance.
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Make Payment</button>
+        </form>
+    </section>
+
+    <div class="footer">
+        &copy; 2024 Event Nest. All rights reserved.
+    </div>
+
+    <script>
+        // Retrieve data from localStorage and display it
+        document.getElementById('eventIdDisplay').textContent = localStorage.getItem('eventId') || 'Unknown Event';
+        document.getElementById('ticketCountDisplay').textContent = localStorage.getItem('numTickets') || '0';
+        document.getElementById('attendeeNamesDisplay').textContent = localStorage.getItem('attendeeNames') || 'N/A';
+
+        document.getElementById('payment-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Check if the RSVP confirmation is checked
+            const rsvpConfirmed = document.getElementById('rsvpConfirmation').checked;
+            if (!rsvpConfirmed) {
+                alert("Please confirm your attendance to proceed.");
+                return;
+            }
+
+            // Process payment (this is a placeholder for actual payment processing)
+            alert("Payment Successful! Your tickets have been booked.");
+            
+            // Optionally clear localStorage after payment
+            localStorage.clear();
+            
+            // Redirect to a confirmation or home page
+            window.location.href = "index.html"; // Update with your desired URL
+        });
+    </script>
+
+    <div id="footer"></div>
+</body>
+</html>
